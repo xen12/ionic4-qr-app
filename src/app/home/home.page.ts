@@ -3,6 +3,9 @@ import { Component } from '@angular/core';
 // plugins
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
+// services
+import { HistorialService } from '../services/historial.service';
+
 // components
 import { ToastController, Platform } from '@ionic/angular';
 
@@ -13,12 +16,13 @@ import { ToastController, Platform } from '@ionic/angular';
 })
 export class HomePage {
 
-  constructor( private barcodeScanner:BarcodeScanner, private toastCtrl:ToastController, private platform:Platform ) {}
+  constructor( private barcodeScanner:BarcodeScanner, private toastCtrl:ToastController, private platform:Platform, private historial:HistorialService ) {}
 
   scan() {
     console.log("Realizando scan");
 
     if( !this.platform.is('cordova') ) {
+      this.historial.agregarHistorial("http://google.com");
       console.log("Dispositivo no movil");
       return;
     }
@@ -28,6 +32,11 @@ export class HomePage {
       console.log('result: ' + barcodeData.text);
       console.log('format: ' + barcodeData.format);
       console.log('cancelled : ' + barcodeData.cancelled);
+
+      if( !barcodeData.cancelled && barcodeData.text != null ) {
+        this.historial.agregarHistorial(barcodeData.text)
+      }
+
     }).catch(err => {
       console.log('Error: ' + err);
       this.mostrarError('Error: ' + err);
