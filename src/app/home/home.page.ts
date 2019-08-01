@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 // components
-import { ToastController } from '@ionic/angular';
+import { ToastController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -13,13 +13,21 @@ import { ToastController } from '@ionic/angular';
 })
 export class HomePage {
 
-  constructor( private barcodeScanner:BarcodeScanner, private toastCtrl:ToastController ) {}
+  constructor( private barcodeScanner:BarcodeScanner, private toastCtrl:ToastController, private platform:Platform ) {}
 
   scan() {
     console.log("Realizando scan");
 
+    if( !this.platform.is('cordova') ) {
+      console.log("Dispositivo no movil");
+      return;
+    }
+
     this.barcodeScanner.scan().then( barcodeData => {
-      console.log('BarcodeData: ' + barcodeData);
+      //console.log('BarcodeData: ' + barcodeData);
+      console.log('result: ' + barcodeData.text);
+      console.log('format: ' + barcodeData.format);
+      console.log('cancelled : ' + barcodeData.cancelled);
     }).catch(err => {
       console.log('Error: ' + err);
       this.mostrarError('Error: ' + err);
