@@ -4,6 +4,9 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+// plugins
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+
 import { HomePage } from './home.page';
 
 @NgModule({
@@ -18,6 +21,7 @@ import { HomePage } from './home.page';
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [HomePage],
+  providers: [BarcodeScanner]
 })
 export class HomePageModule {}
