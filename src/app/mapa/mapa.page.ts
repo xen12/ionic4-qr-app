@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'app-mapa',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MapaPage implements OnInit {
 
-  constructor() { }
+  lat:number;
+  lng:number;
+
+  constructor( ) {
+    this.lat = -17.4067855;
+    this.lng = -66.1805648;
+  }
 
   ngOnInit() {
   }
