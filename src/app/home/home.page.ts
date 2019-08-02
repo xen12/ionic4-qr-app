@@ -22,8 +22,8 @@ export class HomePage {
     console.log("Realizando scan");
 
     if( !this.platform.is('cordova') ) {
+      //console.log(this.historial.cargarHistorial());
       this.historial.agregarHistorial("http://google.com");
-      console.log("Dispositivo no movil");
       return;
     }
 

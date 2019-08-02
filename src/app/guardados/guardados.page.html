@@ -6,4 +6,13 @@
 
 <ion-content>
 
+  <ion-list>
+    <ion-item button *ngFor="let data of historial; let i=index" (click)="abrirScan(i)">
+      <ion-label>
+        {{ data.info }} <br>
+        <p> {{ data.tipo }} </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
 </ion-content>
