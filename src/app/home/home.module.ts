@@ -20,9 +20,9 @@ import { HomePage } from './home.page';
         path: '',
         component: HomePage
       }
-    ])
+    ]),
   ],
   declarations: [HomePage],
-  providers: [BarcodeScanner]
+  providers: [BarcodeScanner],
 })
 export class HomePageModule {}

@@ -14,13 +14,20 @@ import { HistorialService } from './services/historial.service';
 
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
+// mapas
+import { AgmCoreModule } from '@agm/core';
+
+import { MapaPage } from './mapa/mapa.page';
+
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, MapaPage],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyC5SyiRC-r521AR-UdoJxop6Bsp7zzD6KA'
+    })
   ],
   providers: [
     StatusBar,
@@ -29,6 +36,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     InAppBrowser,
     HistorialService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [MapaPage]
 })
 export class AppModule {}
