@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ModalController, Platform, ToastController } from "@ionic/angular";
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts/ngx';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 import { ScanData } from '../models/scan-data.model';
 import { MapaPage } from "../mapa/mapa.page";
@@ -14,7 +15,7 @@ export class HistorialService {
 
   private _historial:ScanData[] = [];
 
-  constructor( private iab:InAppBrowser, private modalCtrl:ModalController, private contacts:Contacts, private platform:Platform, private toastCtrl:ToastController ) { }
+  constructor( private iab:InAppBrowser, private modalCtrl:ModalController, private contacts:Contacts, private platform:Platform, private toastCtrl:ToastController, private emailComposer:EmailComposer ) { }
 
   agregarHistorial( texto:string ) {
     let data = new ScanData( texto );
@@ -46,9 +47,59 @@ export class HistorialService {
       case "contacto":
         this.crear_contacto( scanData.info );
         break;
+      case "email":
+        this.send_email(scanData.info);
+        //this.send_email_link(scanData.info);
+        break;
       default:
+        //console.log(scanData.info);
         console.log("Tipo no soportado");
     }
+  }
+
+  private send_email( texto:string ) {
+    let campos:any = this.parse_email( texto );
+    
+    if ( !this.platform.is("cordova") ) {
+      console.warn("Estoy en la computadora, no enviar email.");
+      return;
+    }
+
+    // this.emailComposer.isAvailable().then((available: boolean) =>{
+    //   if(available) {
+    //     //Now we know we can send
+    //   }
+    //  });
+
+    let email = {
+      to: campos[0].replace("TO:", ""),
+      subject: campos[1].replace("SUB:", ""),
+      body: campos[2].replace("BODY:", "")
+    }
+
+    // add alias
+    // this.emailComposer.addAlias('gmail', 'com.google.android.gm');
+    
+    // // then use alias when sending email
+    // this.emailComposer.open({
+    //   app: 'gmail'
+    // });
+    
+    this.emailComposer.open(email);
+  }
+
+  private send_email_link( texto:string ) {
+    let htmlLink = texto;
+
+    htmlLink = htmlLink.replace("MATMSG:TO:", "mailto:");
+    htmlLink = htmlLink.replace(";SUB:", "?subject=");
+    htmlLink = htmlLink.replace(";BODY:", "&body=");
+    htmlLink = htmlLink.replace(";;", "");
+    htmlLink = htmlLink.replace(/ /g, "%20");
+
+    console.log(htmlLink);
+
+    this.iab.create( htmlLink, "_system" );
   }
 
   private crear_contacto( texto:string ) {
@@ -62,10 +113,10 @@ export class HistorialService {
       console.warn("Estoy en la computadora, no puedo crear contacto.");
       return;
     }
+
     let contact:Contact = this.contacts.create();
     contact.name = new ContactName(null, nombre);
     contact.phoneNumbers = [ new ContactField('mobile', tel) ];
-    console.log("entreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
     
     contact.save().then(
       ()=> this.crear_toast("Contacto " + nombre + " creado!"),
@@ -79,6 +130,11 @@ export class HistorialService {
       duration: 2500
     });
     toast.present();
+  }
+
+  private parse_email( input:string ) {
+    let result = (input.replace("MATMSG:", "")).split(";");
+    return result;
   }
 
   private parse_vcard( input:string ) {

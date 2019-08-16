@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HistorialService } from './services/historial.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts/ngx';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 // mapas
 import { AgmCoreModule } from '@agm/core';
@@ -35,7 +36,8 @@ import { MapaPage } from './mapa/mapa.page';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     InAppBrowser,
     HistorialService,
-    Contacts
+    Contacts,
+    EmailComposer
   ],
   bootstrap: [AppComponent],
   entryComponents: [MapaPage]
