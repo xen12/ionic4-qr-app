@@ -19,7 +19,7 @@ export class MapaPage implements OnInit {
     this.lat = Number( coordsArray[0].replace("geo:", "") );
     this.lng = Number( coordsArray[1] );
 
-    console.log( this.lat + " - " + this.lng );
+    //console.log( this.lat + " - " + this.lng );
   }
 
   ngOnInit() {

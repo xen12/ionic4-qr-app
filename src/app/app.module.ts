@@ -11,8 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 // services
 import { HistorialService } from './services/historial.service';
-
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts/ngx';
 
 // mapas
 import { AgmCoreModule } from '@agm/core';
@@ -34,7 +34,8 @@ import { MapaPage } from './mapa/mapa.page';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     InAppBrowser,
-    HistorialService
+    HistorialService,
+    Contacts
   ],
   bootstrap: [AppComponent],
   entryComponents: [MapaPage]

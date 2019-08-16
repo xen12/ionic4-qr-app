@@ -6,10 +6,12 @@ export class ScanData {
         this.tipo = "no definido";
         this.info = texto;
 
-        if( texto.startsWith("http") ) {
+        if ( texto.startsWith("http") ) {
             this.tipo = "http";
-        } else if( texto.startsWith("geo") ) {
+        } else if ( texto.startsWith("geo") ) {
             this.tipo = "geo";
+        } else if (texto.startsWith("BEGIN:VCARD")) {
+            this.tipo = "contacto";
         }
     }
 }
