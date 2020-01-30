@@ -23,7 +23,7 @@ export class HomePage {
 
     if( !this.platform.is('cordova') ) {
       //this.historial.agregarHistorial("http://google.com");
-      //this.historial.agregarHistorial("geo:-17.4067855,-66.1805648");
+      this.historial.agregarHistorial("geo:-17.4067855,-66.1805648");
 //       this.historial.agregarHistorial( `BEGIN:VCARD
 // VERSION:2.1
 // N:Kent;Clark
@@ -34,7 +34,7 @@ export class HomePage {
 // ADR;TYPE=work:;;;
 // EMAIL:clark@superman.com
 // END:VCARD` );
-      this.historial.agregarHistorial("MATMSG:TO:gus.xen.12@gmail.com;SUB:4-qrapp;BODY:probando qr para envio de email;;");
+      //this.historial.agregarHistorial("MATMSG:TO:gus.xen.12@gmail.com;SUB:4-qrapp;BODY:probando qr para envio de email;;");
       return;
     }
 
